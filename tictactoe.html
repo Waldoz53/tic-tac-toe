@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="grid">
+    <div class="square" onclick="selectSquare(0)"></div>
+    <div class="square" onclick="selectSquare(1)"></div>
+    <div class="square" onclick="selectSquare(2)"></div>
+    <div class="square" onclick="selectSquare(3)"></div>
+    <div class="square" onclick="selectSquare(4)"></div>
+    <div class="square" onclick="selectSquare(5)"></div>
+    <div class="square" onclick="selectSquare(6)"></div>
+    <div class="square" onclick="selectSquare(7)"></div>
+    <div class="square" onclick="selectSquare(8)"></div>
+  </div>
+  <p class="gameStatus">Current player: X</p>
+
+  <script>
+    const gameBoard = (() => {
+      console.log('test')
+    })()
+
+    let playerState = "X"
+    let board = new Array(9)
+    let Xmoves = 0
+    let Omoves = 0
+
+    function selectSquare(tileIndex) {
+      let tiles = document.querySelectorAll('.square')
+      let tile = tiles[tileIndex]
+
+      if (!tile.innerHTML) {
+        board[tileIndex] = playerState
+        tile.innerHTML = playerState
+        if (playerState == "X") {
+          playerState = "O"
+          Xmoves++
+        } else {
+          playerState = "X"
+          Omoves++
+        }
+
+        document.querySelectorAll('.gameStatus')[0].innerHTML = `Current player: ${playerState}`
+      }
+      checkWinner()
+    }
+
+    // Win condition checks
+    function checkWinner() {
+      // players have at least 3 moves...
+      if (Xmoves >= 3 || Omoves >= 3) {
+
+        // row checks
+        if (board[0] == board[1] && board[0] == board[2] && board[1] == board[2]) {
+          if (board[0]){
+            document.querySelectorAll('.gameStatus')[0].innerHTML = `Player ${board[0]} wins!`
+          }
+        }
+        if (board[3] == board[4] && board[3] == board[5] && board[4] == board[5]) {
+          if (board[3]){
+            document.querySelectorAll('.gameStatus')[0].innerHTML = `Player ${board[3]} wins!`
+          }
+        }
+        if (board[6] == board[7] && board[6] == board[8] && board[7] == board[8]) {
+          if (board[6]){
+            document.querySelectorAll('.gameStatus')[0].innerHTML = `Player ${board[6]} wins!`
+          }
+        }
+
+        // column checks
+        if (board[0] == board[3] && board[0] == board[6] && board[3] == board[6]) {
+          if (board[0]) {
+            document.querySelectorAll('.gameStatus')[0].innerHTML = `Player ${board[0]} wins!`
+          }
+        }
+        if (board[1] == board[4] && board[1] == board[7] && board[4] == board[7]) {
+          if (board[1]) {
+            document.querySelectorAll('.gameStatus')[0].innerHTML = `Player ${board[1]} wins!`
+          }
+        }
+        if (board[2] == board[5] && board[2] == board[8] && board[5] == board[8]) {
+          if (board[2]) {
+            document.querySelectorAll('.gameStatus')[0].innerHTML = `Player ${board[2]} wins!`
+          }
+        }
+
+        // diagonal checks
+        if (board[0] == board[4] && board[0] == board[8] && board[4] == board[8]) {
+          if (board[0]) {
+            document.querySelectorAll('.gameStatus')[0].innerHTML = `Player ${board[0]} wins!`
+          }
+        }
+        if (board[2] == board[4] && board[2] == board[6] && board[4] == board[6]) {
+          if (board[2]) {
+            document.querySelectorAll('.gameStatus')[0].innerHTML = `Player ${board[2]} wins!`
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .grid {
+      display: flex;
+      width: 320px;
+      flex-wrap: wrap;
+    }
+    .square {
+      cursor: pointer;
+      border: 1px solid black;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 48px;
+    }
+  </style>
+</body>
+</html>
